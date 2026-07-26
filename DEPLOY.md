@@ -7,44 +7,38 @@ guía cubre GitHub Pages, que es gratis y ya está automatizado en este repo.
 
 ## 1. Publicar en GitHub Pages (gratis)
 
-### Dos ajustes que solo puedes hacer tú
+### Estado actual
 
-Ninguno de estos dos pasos se puede automatizar desde CI — GitHub exige que los
-haga una persona con acceso a la configuración del repositorio.
+- ✅ **Repositorio público.** Pages solo es gratuito en repos públicos; en
+  privado exige plan de pago (Pro, Team o Enterprise).
+- ✅ **Pages activado.** Se activó solo al publicar la rama `gh-pages`: GitHub
+  crea el sitio automáticamente al detectar esa rama en un repo público.
+- ⚠️ **El origen quedó en "Deploy from a branch"** (`gh-pages`), no en
+  "GitHub Actions".
 
-**1. Hacer el repositorio público**
-
-> GitHub Pages solo es gratuito en repositorios públicos. En un repositorio
-> privado requiere un plan de pago (Pro, Team o Enterprise).
-
-`Settings` → abajo del todo, `Danger Zone` → **Change repository visibility** →
-`Make public`.
-
-Qué implica: el código queda visible para cualquiera. La aplicación no contiene
-secretos, claves ni datos de usuario — no hay backend y nada sale del navegador
-— así que lo único que se expone es el propio código.
-
-**2. Activar Pages con origen "GitHub Actions"**
-
-`Settings` → `Pages` → en **Source**, elegir **GitHub Actions**.
-
-No hace falta elegir rama ni carpeta: el workflow de este repo se encarga.
-
-### Y ya está
-
-El workflow `.github/workflows/deploy.yml` se dispara solo en cada push. Tras
-esos dos ajustes, lánzalo desde `Actions` → `Deploy to GitHub Pages` →
-`Run workflow`, o haz cualquier push.
-
-La web queda en:
+La web se sirve desde la rama `gh-pages`, que contiene un build correcto:
 
 ```
 https://straycoderx.github.io/AldeaFit/
 ```
 
-> **Antes de activar Pages, el workflow falla** en el paso `configure-pages`.
-> Es lo esperado: esa acción no puede resolver la URL de un Pages que aún no
-> existe. En cuanto lo actives, deja de fallar.
+### El clic que queda
+
+Con el origen en modo rama, el job `Deploy` del workflow **falla siempre**: la
+acción `deploy-pages` solo puede publicar si el origen es "GitHub Actions". El
+build pasa entero y sube el artefacto, pero la publicación se rechaza.
+
+`Settings` → `Pages` → en **Source**, elegir **GitHub Actions**.
+
+A partir de ahí cada push despliega solo, con los tests como puerta previa. La
+rama `gh-pages` deja de usarse y puedes borrarla:
+
+```bash
+git push origin --delete gh-pages
+```
+
+Mientras no hagas ese cambio, la web sigue funcionando, pero para actualizarla
+hay que reconstruir y volver a empujar `gh-pages` a mano.
 
 Qué hace el workflow en cada despliegue:
 
