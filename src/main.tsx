@@ -19,8 +19,13 @@ createRoot(container).render(
 );
 
 // Register the service worker for offline use. Failure is non-fatal: the app
-// simply behaves like a normal website.
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
+// simply behaves like a normal website. The flag is compiled out by the
+// single-file build, which has no sibling worker script to register.
+declare const __ENABLE_SERVICE_WORKER__: boolean | undefined;
+const serviceWorkerEnabled =
+  typeof __ENABLE_SERVICE_WORKER__ === 'undefined' || __ENABLE_SERVICE_WORKER__;
+
+if ('serviceWorker' in navigator && import.meta.env.PROD && serviceWorkerEnabled) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
       .register(`${import.meta.env.BASE_URL}sw.js`, { scope: import.meta.env.BASE_URL })

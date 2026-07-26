@@ -15,6 +15,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:single": "vite build --config vite.artifact.config.ts && node scripts/build-single-file.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
