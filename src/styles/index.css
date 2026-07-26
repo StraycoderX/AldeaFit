@@ -1,0 +1,271 @@
+@import 'tailwindcss';
+
+/*
+ * AldeaFit design system.
+ *
+ * The reference site pairs black with a single saturated yellow. That reads as
+ * energetic but flat: one accent has to carry emphasis, data and state all at
+ * once. AldeaFit keeps the dark, high-contrast athletic feel and splits the
+ * accent load across three signals — volt (primary/action), ember (intensity)
+ * and cyan (information) — over a warmer, less absolute neutral ramp.
+ */
+
+@theme {
+  /* Neutrals: warm charcoal rather than pure black, which is softer on OLED
+     phones at 2am and keeps large dark surfaces from looking like a void. */
+  --color-ink-950: #08090b;
+  --color-ink-900: #0d0f12;
+  --color-ink-850: #131519;
+  --color-ink-800: #191c21;
+  --color-ink-700: #23272e;
+  --color-ink-600: #333941;
+  --color-ink-500: #4a515b;
+  --color-ink-400: #6b7280;
+  --color-ink-300: #9ba3ae;
+  --color-ink-200: #c7ccd4;
+  --color-ink-100: #e6e9ed;
+  --color-ink-50: #f5f6f8;
+
+  /* Volt — primary action and the headline number. */
+  --color-volt-400: #dcff4f;
+  --color-volt-500: #caf53a;
+  --color-volt-600: #a8d117;
+  --color-volt-700: #7d9e0c;
+
+  /* Ember — intensity, heavy percentage zones, warnings. */
+  --color-ember-400: #ff8a5c;
+  --color-ember-500: #ff6236;
+  --color-ember-600: #e5431a;
+
+  /* Cyan — informational data, charts, secondary emphasis. */
+  --color-aqua-400: #57dfff;
+  --color-aqua-500: #22c9f0;
+  --color-aqua-600: #0aa3c7;
+
+  --color-success-500: #3ddb8f;
+  --color-danger-500: #ff5470;
+
+  --font-display: 'Anton', 'Arial Narrow', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --radius-card: 1.25rem;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Self-hosted fonts: no external requests, so the app works offline and the
+   CSP can forbid third-party origins outright. */
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/anton-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
+    U+FFFD;
+}
+
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/anton-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
+    U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/*
+ * Semantic surface tokens. Components reference these rather than raw palette
+ * steps, so the light theme is a token swap instead of a per-component rewrite.
+ */
+@layer base {
+  :root {
+    --surface-base: var(--color-ink-950);
+    --surface-raised: var(--color-ink-900);
+    --surface-card: var(--color-ink-850);
+    --surface-input: var(--color-ink-800);
+    --surface-hover: var(--color-ink-800);
+    --border-subtle: var(--color-ink-700);
+    --border-strong: var(--color-ink-600);
+    --text-primary: var(--color-ink-50);
+    --text-secondary: var(--color-ink-300);
+    --text-muted: var(--color-ink-400);
+    --accent: var(--color-volt-500);
+    --accent-ink: var(--color-ink-950);
+    --glow: color-mix(in srgb, var(--color-volt-500) 22%, transparent);
+    color-scheme: dark;
+  }
+
+  :root[data-theme='light'] {
+    --surface-base: #f7f8f5;
+    --surface-raised: #ffffff;
+    --surface-card: #ffffff;
+    --surface-input: #f0f2ee;
+    --surface-hover: #e9ece5;
+    --border-subtle: #dfe3da;
+    --border-strong: #c3c9bb;
+    --text-primary: var(--color-ink-900);
+    --text-secondary: var(--color-ink-600);
+    --text-muted: var(--color-ink-500);
+    --accent: var(--color-volt-700);
+    --accent-ink: #ffffff;
+    --glow: color-mix(in srgb, var(--color-volt-600) 16%, transparent);
+    color-scheme: light;
+  }
+
+  * {
+    border-color: var(--border-subtle);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--surface-base);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'tnum';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* Respect the notch and the home indicator on iOS. */
+    padding-bottom: env(safe-area-inset-bottom);
+    overscroll-behavior-y: none;
+  }
+
+  /* Numeric readouts must not jitter as digits change. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* A single visible, consistent focus ring across every interactive element. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 0.375rem;
+  }
+
+  /* Remove the spinner arrows: the app supplies its own steppers. */
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 0.92;
+    text-transform: uppercase;
+  }
+
+  .card {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-card);
+  }
+
+  /* The signature treatment: a soft volt bloom behind the hero result. */
+  .glow-accent {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent),
+      0 0 40px -8px var(--glow),
+      0 18px 50px -20px rgb(0 0 0 / 0.6);
+  }
+
+  /* Diagonal hatch used behind hero sections, echoing the reference's texture
+     without shipping a raster image. */
+  .hatch {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      color-mix(in srgb, var(--text-primary) 4%, transparent) 0 1px,
+      transparent 1px 9px
+    );
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .animate-rise {
+    animation: rise 0.45s var(--ease-out-expo) both;
+  }
+
+  @keyframes pop {
+    0% {
+      transform: scale(0.94);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-pop {
+    animation: pop 0.35s var(--ease-spring) both;
+  }
+}
