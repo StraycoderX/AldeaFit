@@ -2,7 +2,9 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # Both the eventual release branch and the branch this work was developed
+    # on, so the first deploy does not wait on a rename.
+    branches: [main, claude/aldeafit-multidevice-app-58kkeg]
   workflow_dispatch:
 
 permissions:
@@ -41,11 +43,25 @@ jobs:
       - name: Verify
         run: npm run typecheck && npm run lint && npm run test
 
+      - name: Resolve base path
+        id: base
+        # A project site is served from /<repo>/, but a custom domain serves
+        # from the root. Deriving this from the presence of public/CNAME means
+        # adding the domain file is the only change needed to switch over.
+        run: |
+          if [ -f public/CNAME ]; then
+            echo "Custom domain: $(cat public/CNAME) — building for root"
+            echo "path=/" >> "$GITHUB_OUTPUT"
+          else
+            RAW='${{ steps.pages.outputs.base_path }}'
+            if [ -z "$RAW" ] || [ "$RAW" = "/" ]; then RAW=""; fi
+            echo "Project site — building for ${RAW}/"
+            echo "path=${RAW}/" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Build
         env:
-          # Pages serves a project site from /<repo>/, so the bundle must be
-          # built with a matching base path. `configure-pages` resolves it.
-          BASE_PATH: ${{ steps.pages.outputs.base_path && format('{0}/', steps.pages.outputs.base_path) || '/' }}
+          BASE_PATH: ${{ steps.base.outputs.path }}
         run: npm run build
 
       - name: Stamp the service worker cache version
@@ -59,6 +75,11 @@ jobs:
         # Pages has no rewrite rules. Routing is hash-based so this is only a
         # safety net for a mistyped path, but it avoids a bare 404 page.
         run: cp dist/index.html dist/404.html
+
+      - name: Disable Jekyll
+        # Without this, a "deploy from branch" setup would have Jekyll strip
+        # `_headers` and anything else beginning with an underscore.
+        run: touch dist/.nojekyll
 
       - uses: actions/upload-pages-artifact@v3
         with:
