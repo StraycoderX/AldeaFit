@@ -14,7 +14,7 @@ const es = {
   'app.name': 'AldeaFit',
   'app.tagline': 'Tu fuerza, calculada de verdad',
   'app.description':
-    'Calculadora de fuerza offline: 1RM por consenso, discos de la barra, calentamiento y progreso. Sin cuentas y sin rastreo.',
+    'Calculadora de fuerza offline: 1RM con datos reales de gimnasio, discos de la barra, calentamiento y progreso. Sin cuentas y sin rastreo.',
 
   // Navigation
   'nav.calculator': 'Calculadora',
@@ -27,7 +27,7 @@ const es = {
 
   // Calculator
   'calc.title': 'Calculadora 1RM',
-  'calc.subtitle': 'Repetición máxima por consenso de 7 fórmulas',
+  'calc.subtitle': 'Estimada con datos reales de gimnasio, no con fórmulas de laboratorio',
   'calc.weight': 'Peso',
   'calc.reps': 'Repeticiones',
   'calc.rir': 'RIR',
@@ -35,7 +35,7 @@ const es = {
   'calc.lift': 'Ejercicio',
   'calc.submit': 'Calcular 1RM',
   'calc.result': 'Tu 1RM estimado',
-  'calc.range': 'Rango',
+  'calc.range': 'Rango de las clásicas',
   'calc.confidence': 'Fiabilidad',
   'calc.confidence.high': 'Alta',
   'calc.confidence.medium': 'Media',
@@ -44,9 +44,13 @@ const es = {
   'calc.confidenceHelp.medium': 'Rango moderado. Útil para planificar, no para récords.',
   'calc.confidenceHelp.low':
     'Muchas repeticiones: las fórmulas divergen. Usa series de 5 o menos para afinar.',
-  'calc.breakdown': 'Fórmula a fórmula',
+  'calc.breakdown': 'Comparación con las fórmulas clásicas',
   'calc.breakdownHelp':
-    'Cada fórmula se ajustó con datos distintos. Mostramos la mediana, no la más optimista.',
+    'Las 7 clásicas se ajustaron en los años 80-90, casi todas con press de banca, y son lineales en el peso: dan el mismo multiplicador con 20 kg que con 200 kg. Por eso se agrupan tanto entre sí.',
+  'calc.primaryHelp':
+    'Modelo ajustado sobre 303.494 series reales cerca del fallo (14.966 personas, 388 ejercicios). Su factor de conversión depende del peso absoluto, así que responde distinto a un peso muerto pesado que a una elevación lateral.',
+  'calc.primaryBadge': 'Datos de gimnasio',
+  'calc.classicalLabel': 'Clásicas (lineales)',
   'calc.notApplicable': 'Fuera de rango',
   'calc.effectiveReps': 'Repeticiones efectivas',
   'calc.save': 'Guardar en progreso',
@@ -60,7 +64,7 @@ const es = {
 
   // Percentages
   'pct.title': 'Tabla de porcentajes',
-  'pct.subtitle': 'Qué peso mover para cada objetivo',
+  'pct.subtitle': 'Calculado desde tu 1RM, no de una tabla fija',
   'pct.percent': '%1RM',
   'pct.weight': 'Peso',
   'pct.reps': 'Reps aprox.',
@@ -216,7 +220,7 @@ const en: Record<TranslationKey, string> = {
   'nav.settings': 'Settings',
 
   'calc.title': '1RM Calculator',
-  'calc.subtitle': 'One-rep max by consensus of 7 formulas',
+  'calc.subtitle': 'Estimated from real gym data, not lab formulas',
   'calc.weight': 'Weight',
   'calc.reps': 'Repetitions',
   'calc.rir': 'RIR',
@@ -224,7 +228,7 @@ const en: Record<TranslationKey, string> = {
   'calc.lift': 'Exercise',
   'calc.submit': 'Calculate 1RM',
   'calc.result': 'Your estimated 1RM',
-  'calc.range': 'Range',
+  'calc.range': 'Classical range',
   'calc.confidence': 'Confidence',
   'calc.confidence.high': 'High',
   'calc.confidence.medium': 'Medium',
@@ -233,9 +237,13 @@ const en: Record<TranslationKey, string> = {
   'calc.confidenceHelp.medium': 'Moderate spread. Good for programming, not for records.',
   'calc.confidenceHelp.low':
     'High reps: the formulas diverge. Use sets of 5 or fewer to sharpen it.',
-  'calc.breakdown': 'Formula by formula',
+  'calc.breakdown': 'Compared with the classical formulas',
   'calc.breakdownHelp':
-    'Each formula was fitted on different data. We show the median, not the most flattering one.',
+    'The 7 classics were fitted in the 1980s-90s, mostly on bench press, and are linear in the load: they give the same multiplier at 20 kg as at 200 kg. That is why they cluster so tightly.',
+  'calc.primaryHelp':
+    'Model fitted on 303,494 real near-failure sets (14,966 people, 388 exercises). Its conversion factor depends on the absolute load, so it responds differently to a heavy deadlift than to a lateral raise.',
+  'calc.primaryBadge': 'Gym data',
+  'calc.classicalLabel': 'Classical (linear)',
   'calc.notApplicable': 'Out of range',
   'calc.effectiveReps': 'Effective reps',
   'calc.save': 'Save to progress',
@@ -248,7 +256,7 @@ const en: Record<TranslationKey, string> = {
   'calc.empty': 'Enter a weight and rep count to begin.',
 
   'pct.title': 'Percentage table',
-  'pct.subtitle': 'What to load for every goal',
+  'pct.subtitle': 'Derived from your 1RM, not a fixed chart',
   'pct.percent': '%1RM',
   'pct.weight': 'Weight',
   'pct.reps': 'Approx. reps',

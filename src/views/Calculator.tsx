@@ -64,7 +64,7 @@ export function Calculator() {
 
   // Publish the result so the percentage, plate and warm-up screens can use it.
   useEffect(() => {
-    setCurrentOneRm(result ? result.consensus : null);
+    setCurrentOneRm(result ? result.estimate : null);
   }, [result, setCurrentOneRm]);
 
   const signature = `${weight}|${reps}|${rir}|${lift}`;
@@ -78,7 +78,7 @@ export function Calculator() {
   const bestForLift = history
     .filter((entry) => entry.lift === lift)
     .reduce((best, entry) => Math.max(best, entry.oneRmKg), 0);
-  const isPr = result !== null && bestForLift > 0 && result.consensus > bestForLift;
+  const isPr = result !== null && bestForLift > 0 && result.estimate > bestForLift;
 
   const save = () => {
     if (!result) return;
@@ -88,7 +88,7 @@ export function Calculator() {
       weightKg: round(weightResult.value, 2),
       reps: repsResult.value,
       rir: rirValue,
-      oneRmKg: result.consensus,
+      oneRmKg: result.estimate,
     });
     setSavedFor(signature);
   };
@@ -96,7 +96,7 @@ export function Calculator() {
   const share = async () => {
     if (!result) return;
     const text = `${t('app.name')} · ${t(`lift.${lift}` as TranslationKey)}: ${formatWeight(
-      result.consensus,
+      result.estimate,
       unit,
     )} ${unit} 1RM (${formatWeight(weightResult.value, unit)} ${unit} × ${repsResult.value})`;
 
@@ -216,7 +216,7 @@ export function Calculator() {
                 </p>
 
                 <p className="display tabular mt-2 text-7xl sm:text-8xl" style={{ color: 'var(--accent)' }}>
-                  {formatWeight(result.consensus, unit)}
+                  {formatWeight(result.estimate, unit)}
                   <span className="ml-2 text-3xl sm:text-4xl">{unit}</span>
                 </p>
 
@@ -240,6 +240,19 @@ export function Calculator() {
 
                 <p className="mx-auto mt-3 max-w-xs text-xs" style={{ color: 'var(--text-muted)' }}>
                   {t(`calc.confidenceHelp.${result.confidence}` as TranslationKey)}
+                </p>
+
+                {/* Names the model behind the headline number, so the figure is
+                    attributable rather than an anonymous output. */}
+                <p
+                  className="mx-auto mt-4 max-w-sm border-t pt-3 text-[11px] leading-relaxed"
+                  style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
+                >
+                  <span className="font-bold" style={{ color: 'var(--text-secondary)' }}>
+                    {t('calc.primaryBadge')}
+                  </span>
+                  {' · '}
+                  {t('calc.primaryHelp')}
                 </p>
 
                 <div className="mt-6 flex gap-2">
@@ -296,8 +309,15 @@ export function Calculator() {
             {t('calc.breakdownHelp')}
           </p>
 
+          <p
+            className="mb-4 text-[11px] font-semibold tracking-wider uppercase"
+            style={{ color: 'var(--text-muted)' }}
+          >
+            {t('calc.classicalLabel')}
+          </p>
+
           <ul className="grid gap-2 lg:grid-cols-2 lg:gap-x-10">
-                  {result.estimates.map((estimate) => {
+                  {result.estimates.filter((e) => e.id !== 'gymdata').map((estimate) => {
                     // Scale across the low→high band rather than from zero. The
                     // formulas typically agree within a few percent, so a
                     // zero-based bar would render seven identical-looking rows
@@ -326,7 +346,7 @@ export function Calculator() {
                                 // as a bar rather than an empty track.
                                 width: `${12 + ratio * 88}%`,
                                 backgroundColor:
-                                  estimate.value === result.consensus
+                                  Math.abs(estimate.value - result.estimate) < 0.05
                                     ? 'var(--accent)'
                                     : 'var(--color-ink-500)',
                               }}
@@ -356,7 +376,7 @@ export function Calculator() {
         <p className="mt-5 text-center text-xs" style={{ color: 'var(--text-muted)' }}>
           {t('standards.ratio')}:{' '}
           <strong style={{ color: 'var(--text-secondary)' }}>
-            {round(result.consensus / settings.bodyweightKg, 2)}×
+            {round(result.estimate / settings.bodyweightKg, 2)}×
           </strong>{' '}
           {t('standards.bodyweight').toLowerCase()}
         </p>

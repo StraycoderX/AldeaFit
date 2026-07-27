@@ -135,14 +135,15 @@ export function Percentages() {
 
                   <span className="tabular text-xs" style={{ color: 'var(--text-secondary)' }}>
                     <span className="sm:hidden">{t('pct.reps')}: </span>
-                    {/* The rep model is only defined to 30; beyond that show an
-                        open-ended value rather than repeating "~30" down the
-                        table as if 55% and 50% were the same set. */}
+                    {/* Rep counts are now derived from the lifter's own 1RM, so
+                        this column shifts with the load rather than being a
+                        fixed chart. The model is defined to 30 reps; beyond that
+                        show an open-ended value instead of repeating "~30". */}
                     {percent >= 100
                       ? '1'
-                      : repsForPercent(percent) >= LIMITS.reps.max
+                      : repsForPercent(percent, oneRmKg) >= LIMITS.reps.max
                         ? `${LIMITS.reps.max}+`
-                        : `~${repsForPercent(percent)}`}
+                        : `~${repsForPercent(percent, oneRmKg)}`}
                   </span>
 
                   <span

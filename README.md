@@ -12,19 +12,58 @@ cómo evolucionas.
 
 ## Por qué es distinta
 
-La mayoría de calculadoras 1RM online aplican **una** fórmula (casi siempre
-Epley) y presentan el resultado como un hecho. En realidad las fórmulas
-publicadas discrepan entre un 5 % y un 10 % en rangos medios, y divergen mucho
-más a partir de 10 repeticiones.
+La mayoría de calculadoras 1RM aplican **una** fórmula (casi siempre Epley) y
+presentan el resultado como un hecho. Pero hay un problema más profundo: las
+siete fórmulas clásicas (Epley, Brzycki, Lombardi, O'Conner, Wathan, Lander,
+Mayhew) se ajustaron en los años 80-90, casi todas con press de banca, y **todas
+son lineales en el peso**. Calculan `peso × f(reps)`: el multiplicador para 5
+repeticiones es idéntico con 20 kg que con 200 kg. Por eso se agrupan en un
+margen de pocos puntos porcentuales — son siete constantes distintas aplicadas a
+la misma forma.
 
-AldeaFit ejecuta **siete fórmulas** (Epley, Brzycki, Lombardi, O'Conner,
-Wathan, Lander, Mayhew), muestra la **mediana** como cifra principal y enseña el
-**rango completo** más una **valoración de fiabilidad**. Ver que tu 1RM es
-"119,5 kg, entre 115 y 122" es mucho más honesto que un "119,5 kg" a secas.
+El gimnasio no funciona así. Hoeger et al. midieron ~34 repeticiones al 60 % del
+1RM en prensa de piernas frente a ~11 en curl femoral, y el metaanálisis de
+Nuzzo et al. (2024), sobre 952 tests y 7.289 personas, concluyó que **el
+ejercicio es el único moderador que desplaza la curva de forma relevante** — el
+sexo, la edad y el nivel de entrenamiento apenas influyen.
+
+AldeaFit usa como modelo principal la ecuación de Marzagão (2026), ajustada
+sobre **303.494 series reales cerca del fallo** registradas por 14.966 personas
+en 388 ejercicios dentro de una app de entrenamiento:
+
+```
+1RM = w · ( 1 + (r − 1)^0.85 / ( −2.55 + 4.58 · ln w ) )
+```
+
+El denominador hace que el factor de conversión dependa del **peso absoluto**,
+que es lo que permite a una sola ecuación comportarse distinto en un peso muerto
+de 200 kg y en una elevación lateral de 12 kg sin que se le diga qué ejercicio
+es. Redujo la inconsistencia un 17-22 % frente a las cuatro clásicas de
+referencia, y mejoró en los 183 ejercicios con datos suficientes.
+
+En la práctica, frente a Epley con una serie de 5:
+
+| Peso | AldeaFit | Epley | Diferencia |
+|---|---|---|---|
+| 12 kg | 15,1 kg | 14,0 kg | +8,1 % |
+| 60 kg | 69,8 kg | 70,0 kg | −0,2 % |
+| 220 kg | 247,7 kg | 256,7 kg | −3,5 % |
+
+> **Sobre las unidades:** `ln w` no es invariante de escala, así que la unidad en
+> que se ajustó la ecuación cambia el resultado hasta un 5 %. El preprint no era
+> accesible, de modo que la unidad se dedujo contrastando ambas hipótesis contra
+> anclas publicadas de press de banca (≈2 reps al 95 %, ≈4 al 90 %, ≈8-9 al
+> 80 %). Las libras encajan el doble de bien (RMSE 0,64 frente a 1,28
+> repeticiones), lo que además coincide con el origen estadounidense del dataset.
+> Los tests fijan esas anclas: si la unidad fuera la incorrecta, fallan.
+
+Las siete clásicas se siguen mostrando, pero como **comparación** y etiquetadas
+como lo que son.
 
 | | Calculadora típica | AldeaFit |
 |---|---|---|
-| Fórmulas | 1 (Epley) | 7 + consenso por mediana |
+| Modelo | 1 fórmula de laboratorio | Ajustado sobre 303.494 series reales |
+| Sensible al peso | No | Sí — el multiplicador cambia con la carga |
 | Incertidumbre | ninguna | rango + fiabilidad alta/media/baja |
 | Validación | `parseFloat` | rechaza `Infinity`, `1e999`, negativos, texto |
 | 1 repetición | devuelve 103 % del peso | devuelve el peso real levantado |
@@ -35,7 +74,7 @@ Wathan, Lander, Mayhew), muestra la **mediana** como cifra principal y enseña e
 
 ## Funcionalidades
 
-- **Calculadora 1RM** — consenso de 7 fórmulas con rango de confianza, desglose
+- **Calculadora 1RM** — datos reales de gimnasio con rango de confianza, desglose
   fórmula a fórmula y soporte de RIR para series que no llegan al fallo.
 - **Cargador de barra** — dibuja la barra con los discos exactos por lado.
   Respeta el inventario real de tu gimnasio: si sólo tienes un par de 20 kg, te
@@ -89,7 +128,7 @@ npm run verify     # typecheck + lint + tests + build
 ```
 src/
 ├── lib/          Lógica de dominio pura, sin React (y donde viven los tests)
-│   ├── onerm.ts       Las 7 fórmulas + consenso + porcentajes
+│   ├── onerm.ts       Modelo de datos de gimnasio + 7 clásicas + porcentajes
 │   ├── plates.ts      Resolución de discos con inventario finito
 │   ├── standards.ts   DOTS y escalera de niveles
 │   ├── warmup.ts      Generación de series de aproximación
@@ -104,7 +143,7 @@ src/
 ```
 
 La lógica de dominio es **TypeScript puro sin dependencias de React**, lo que
-permite testearla directamente. 89 tests cubren las fórmulas, la resolución de
+permite testearla directamente. 98 tests cubren el modelo, la resolución de
 discos, la validación y el almacenamiento.
 
 ### Decisiones de diseño
