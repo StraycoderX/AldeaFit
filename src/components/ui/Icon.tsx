@@ -24,7 +24,8 @@ export type IconName =
   | 'download'
   | 'upload'
   | 'install'
-  | 'shield';
+  | 'shield'
+  | 'body';
 
 const PATHS: Record<IconName, string> = {
   calculator:
@@ -48,6 +49,7 @@ const PATHS: Record<IconName, string> = {
   upload: 'M12 15V3 M8 7l4-4 4 4 M5 21h14',
   install: 'M12 3v12 M8 11l4 4 4-4 M4 21h16a1 1 0 0 0 1-1v-3 M3 17v3a1 1 0 0 0 1 1',
   shield: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z M9 12l2 2 4-4',
+  body: 'M12 5.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z M12 8v6 M8 10h8 M12 14l-3 8 M12 14l3 8',
 };
 
 interface IconProps {

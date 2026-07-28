@@ -19,6 +19,7 @@ export type ViewId =
   | 'percentages'
   | 'plates'
   | 'warmup'
+  | 'technique'
   | 'standards'
   | 'history'
   | 'settings';
@@ -34,6 +35,7 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { id: 'percentages', labelKey: 'nav.percentages', icon: 'percent' },
   { id: 'plates', labelKey: 'nav.plates', icon: 'barbell' },
   { id: 'warmup', labelKey: 'nav.warmup', icon: 'flame' },
+  { id: 'technique', labelKey: 'nav.technique', icon: 'body' },
   { id: 'standards', labelKey: 'nav.standards', icon: 'trophy' },
   { id: 'history', labelKey: 'nav.history', icon: 'chart' },
   { id: 'settings', labelKey: 'nav.settings', icon: 'settings' },

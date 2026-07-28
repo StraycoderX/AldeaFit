@@ -24,6 +24,63 @@ const es = {
   'nav.standards': 'Nivel',
   'nav.history': 'Progreso',
   'nav.settings': 'Ajustes',
+  'nav.technique': 'Técnica',
+
+  // Technique
+  'tech.title': 'Técnica',
+  'tech.subtitle': 'Cómo ejecutar cada levantamiento',
+  'tech.cues': 'Claves de ejecución',
+  'tech.dragHint': 'Arrastra para girar la figura',
+  'tech.play': 'Reproducir',
+  'tech.pause': 'Pausar',
+  'tech.figureLabel': 'Figura 3D demostrando la técnica de {lift}',
+  'tech.disclaimer':
+    'Guía general, no sustituye la supervisión de un entrenador. Si tienes molestias o dudas con un movimiento, revísalo con un profesional antes de cargar peso.',
+
+  'tech.squat.cue1':
+    'Barra sobre los trapecios, no sobre el cuello. Agarre firme, codos bajo la barra y pecho alto. Pies a la anchura de los hombros con las puntas ligeramente hacia fuera.',
+  'tech.squat.cue2':
+    'Toma aire y aprieta el abdomen antes de bajar. Inicia el movimiento llevando la cadera atrás y las rodillas hacia fuera, en la dirección de las puntas de los pies.',
+  'tech.squat.cue3':
+    'Baja hasta que la cadera quede por debajo de la rodilla, manteniendo la barra alineada sobre el mediopié. La espalda mantiene su curva natural: ni se redondea ni se hiperextiende.',
+  'tech.squat.cue4':
+    'Sube empujando el suelo con todo el pie y llevando cadera y pecho a la vez. Si la cadera sube antes que el pecho, el peso es excesivo.',
+
+  'tech.bench.cue1':
+    'Cinco puntos de apoyo: cabeza, hombros y glúteo en el banco, ambos pies en el suelo. Junta las escápulas y mantenlas retraídas toda la serie.',
+  'tech.bench.cue2':
+    'Agarre algo más ancho que los hombros, muñeca recta sobre el antebrazo. La barra sale del soporte y se estabiliza sobre los hombros.',
+  'tech.bench.cue3':
+    'Baja controlado hasta tocar el pecho a la altura del esternón, con los codos a unos 45-75° del torso, no abiertos en cruz.',
+  'tech.bench.cue4':
+    'Empuja la barra en diagonal hacia arriba y ligeramente atrás, hasta la vertical de los hombros. Los glúteos no se despegan del banco.',
+
+  'tech.deadlift.cue1':
+    'Barra sobre el mediopié, casi tocando la espinilla. Pies a la anchura de la cadera. Agarre justo por fuera de las piernas.',
+  'tech.deadlift.cue2':
+    'Baja la cadera hasta llegar a la barra sin redondear la espalda. Pecho alto, dorsales activos, hombros ligeramente por delante de la barra.',
+  'tech.deadlift.cue3':
+    'Aprieta el abdomen y tira eliminando la holgura de la barra antes de despegarla. Empuja el suelo con las piernas en vez de tirar con la espalda.',
+  'tech.deadlift.cue4':
+    'La barra sube pegada al cuerpo. Termina de pie, extendiendo cadera y rodillas a la vez. No hiperextiendas la espalda al bloquear.',
+
+  'tech.ohp.cue1':
+    'Barra sobre la clavícula, codos ligeramente por delante. Agarre a la anchura de los hombros, muñecas rectas.',
+  'tech.ohp.cue2':
+    'Aprieta glúteo y abdomen para que la lumbar no compense. Los pies quedan a la anchura de la cadera.',
+  'tech.ohp.cue3':
+    'Aparta ligeramente la cabeza hacia atrás para dejar pasar la barra y empuja en línea recta vertical.',
+  'tech.ohp.cue4':
+    'Bloquea con la barra sobre la mitad del pie, no por delante. Cabeza vuelve a su sitio y hombros activos arriba.',
+
+  'tech.row.cue1':
+    'Cadera atrás hasta inclinar el torso entre 15 y 45° respecto a la horizontal. Rodillas algo flexionadas, espalda neutra.',
+  'tech.row.cue2':
+    'Agarre a la anchura de los hombros. Deja los brazos colgar en vertical y la barra cerca de las piernas.',
+  'tech.row.cue3':
+    'Tira llevando los codos hacia atrás y las escápulas hacia el centro, no solo doblando los brazos.',
+  'tech.row.cue4':
+    'Baja controlado sin dejar que el torso se levante. Si tienes que impulsar con la cadera, el peso es excesivo.',
 
   // Calculator
   'calc.title': 'Calculadora 1RM',
@@ -53,6 +110,8 @@ const es = {
   'calc.classicalLabel': 'Clásicas (lineales)',
   'calc.notApplicable': 'Fuera de rango',
   'calc.effectiveReps': 'Repeticiones efectivas',
+  'calc.liftAdjust':
+    'Ajuste por {lift}: {delta} respecto a press banca. En sentadilla se aguantan más repeticiones al mismo %1RM, así que la misma serie implica un máximo algo menor.',
   'calc.save': 'Guardar en progreso',
   'calc.saved': 'Guardado',
   'calc.share': 'Compartir',
@@ -218,6 +277,63 @@ const en: Record<TranslationKey, string> = {
   'nav.standards': 'Level',
   'nav.history': 'Progress',
   'nav.settings': 'Settings',
+  'nav.technique': 'Technique',
+
+  // Technique
+  'tech.title': 'Technique',
+  'tech.subtitle': 'How to perform each lift',
+  'tech.cues': 'Execution cues',
+  'tech.dragHint': 'Drag to rotate the figure',
+  'tech.play': 'Play',
+  'tech.pause': 'Pause',
+  'tech.figureLabel': '3D figure demonstrating {lift} technique',
+  'tech.disclaimer':
+    'General guidance, not a substitute for coaching. If a movement causes discomfort or you are unsure, review it with a professional before loading it.',
+
+  'tech.squat.cue1':
+    'Bar on the traps, never on the neck. Firm grip, elbows under the bar, chest tall. Feet about shoulder width with toes turned slightly out.',
+  'tech.squat.cue2':
+    'Breathe in and brace before descending. Start by sending the hips back and the knees out, tracking over the toes.',
+  'tech.squat.cue3':
+    'Descend until the hip crease is below the knee, keeping the bar stacked over mid-foot. The back holds its natural curve — neither rounded nor hyperextended.',
+  'tech.squat.cue4':
+    'Drive up through the whole foot, hips and chest rising together. If the hips shoot up first, the load is too heavy.',
+
+  'tech.bench.cue1':
+    'Five points of contact: head, shoulders and glutes on the bench, both feet on the floor. Pinch the shoulder blades together and keep them retracted.',
+  'tech.bench.cue2':
+    'Grip slightly wider than the shoulders, wrist stacked over the forearm. Unrack and stabilise the bar over the shoulders.',
+  'tech.bench.cue3':
+    'Lower under control to touch the chest around the sternum, elbows roughly 45-75° from the torso rather than flared straight out.',
+  'tech.bench.cue4':
+    'Press diagonally up and slightly back, finishing over the shoulders. The glutes stay on the bench throughout.',
+
+  'tech.deadlift.cue1':
+    'Bar over mid-foot, almost touching the shin. Feet hip width. Grip just outside the legs.',
+  'tech.deadlift.cue2':
+    'Drop the hips to reach the bar without rounding the back. Chest tall, lats engaged, shoulders slightly ahead of the bar.',
+  'tech.deadlift.cue3':
+    'Brace and pull the slack out of the bar before it leaves the floor. Push the floor away with the legs rather than pulling with the back.',
+  'tech.deadlift.cue4':
+    'The bar travels close to the body. Finish standing, extending hips and knees together. Do not hyperextend the back to lock out.',
+
+  'tech.ohp.cue1':
+    'Bar resting on the collarbone, elbows slightly ahead. Shoulder-width grip, wrists straight.',
+  'tech.ohp.cue2':
+    'Squeeze glutes and brace so the lower back does not compensate. Feet about hip width.',
+  'tech.ohp.cue3':
+    'Move the head back just enough to clear the bar, then press in a straight vertical line.',
+  'tech.ohp.cue4':
+    'Lock out with the bar over mid-foot, not in front of it. Head returns to neutral, shoulders active overhead.',
+
+  'tech.row.cue1':
+    'Hinge at the hips until the torso is 15-45° from horizontal. Knees softly bent, back neutral.',
+  'tech.row.cue2':
+    'Shoulder-width grip. Let the arms hang vertically with the bar close to the legs.',
+  'tech.row.cue3':
+    'Pull by driving the elbows back and the shoulder blades together, not just by bending the arms.',
+  'tech.row.cue4':
+    'Lower under control without letting the torso rise. If you need to heave with the hips, the load is too heavy.',
 
   'calc.title': '1RM Calculator',
   'calc.subtitle': 'Estimated from real gym data, not lab formulas',
@@ -246,6 +362,8 @@ const en: Record<TranslationKey, string> = {
   'calc.classicalLabel': 'Classical (linear)',
   'calc.notApplicable': 'Out of range',
   'calc.effectiveReps': 'Effective reps',
+  'calc.liftAdjust':
+    '{lift} adjustment: {delta} vs bench press. Squats sustain more reps at the same %1RM, so the same set implies a slightly lower max.',
   'calc.save': 'Save to progress',
   'calc.saved': 'Saved',
   'calc.share': 'Share',

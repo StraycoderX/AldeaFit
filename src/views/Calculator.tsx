@@ -16,7 +16,7 @@ import { Field } from '@/components/ui/Field';
 import { Segmented } from '@/components/ui/Segmented';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { Icon } from '@/components/ui/Icon';
-import { estimateOneRm, estimateOneRmFromRir } from '@/lib/onerm';
+import { estimateOneRm, estimateOneRmForLift } from '@/lib/onerm';
 import { LIFTS, type LiftId } from '@/lib/standards';
 import { formatWeight, fromKg, round } from '@/lib/units';
 import { isHighRepEstimate, LIMITS, parseReps, parseWeight } from '@/lib/validation';
@@ -57,10 +57,18 @@ export function Calculator() {
 
   const result = useMemo(() => {
     if (!ready) return null;
-    return rirValue > 0
-      ? estimateOneRmFromRir(weightResult.value, repsResult.value, rirValue)
-      : estimateOneRm(weightResult.value, repsResult.value);
-  }, [ready, rirValue, weightResult.value, repsResult.value]);
+    return estimateOneRmForLift(weightResult.value, repsResult.value, rirValue, lift);
+  }, [ready, rirValue, weightResult.value, repsResult.value, lift]);
+
+  // What the exercise choice is worth, relative to the bench-press reference.
+  // Shown rather than applied silently, so the picker is auditable.
+  const liftDelta = useMemo(() => {
+    if (!result || !ready) return null;
+    const reference = estimateOneRm(weightResult.value, repsResult.value + rirValue).estimate;
+    if (reference <= 0) return null;
+    const percent = round(((result.estimate - reference) / reference) * 100, 1);
+    return Math.abs(percent) < 0.05 ? null : percent;
+  }, [result, ready, weightResult.value, repsResult.value, rirValue]);
 
   // Publish the result so the percentage, plate and warm-up screens can use it.
   useEffect(() => {
@@ -178,8 +186,17 @@ export function Calculator() {
             />
           </div>
 
+          {liftDelta !== null && (
+            <p className="mt-3 text-xs" style={{ color: 'var(--text-muted)' }}>
+              {t('calc.liftAdjust', {
+                lift: t(`lift.${lift}` as TranslationKey),
+                delta: `${liftDelta > 0 ? '+' : ''}${liftDelta}%`,
+              })}
+            </p>
+          )}
+
           {rirValue > 0 && ready && (
-            <p className="mt-4 text-xs" style={{ color: 'var(--text-muted)' }}>
+            <p className="mt-2 text-xs" style={{ color: 'var(--text-muted)' }}>
               {t('calc.effectiveReps')}:{' '}
               <strong style={{ color: 'var(--text-secondary)' }}>{effectiveReps}</strong>
             </p>

@@ -13,6 +13,7 @@ import { Calculator } from '@/views/Calculator';
 import { Percentages } from '@/views/Percentages';
 import { Plates } from '@/views/Plates';
 import { Warmup } from '@/views/Warmup';
+import { Technique } from '@/views/Technique';
 import { Standards } from '@/views/Standards';
 import { History } from '@/views/History';
 import { Settings } from '@/views/Settings';
@@ -31,6 +32,7 @@ const VIEWS: Record<ViewId, () => React.ReactElement> = {
   percentages: Percentages,
   plates: Plates,
   warmup: Warmup,
+  technique: Technique,
   standards: Standards,
   history: History,
   settings: Settings,

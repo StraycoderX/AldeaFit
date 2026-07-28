@@ -55,6 +55,8 @@
  */
 
 import { round, KG_PER_LB } from './units';
+import { effectiveReps } from './exercises';
+import type { LiftId } from './standards';
 
 export type FormulaId =
   | 'gymdata'
@@ -260,6 +262,26 @@ export function estimateOneRm(weightKg: number, reps: number): OneRmResult {
  */
 export function estimateOneRmFromRir(weightKg: number, reps: number, rir: number): OneRmResult {
   return estimateOneRm(weightKg, reps + rir);
+}
+
+/**
+ * Estimate a 1RM for a specific exercise.
+ *
+ * Converts the reps performed into their bench-press equivalent first, because
+ * a movement that sustains more reps at the same relative load means a given
+ * rep count sat at a heavier percentage. Without this, the exercise picker in
+ * the UI would be decorative — the same load and reps would return the same max
+ * for a squat and an overhead press, which the literature contradicts.
+ *
+ * See `exercises.ts` for what is evidenced and what is approximated.
+ */
+export function estimateOneRmForLift(
+  weightKg: number,
+  reps: number,
+  rir: number,
+  lift: LiftId,
+): OneRmResult {
+  return estimateOneRm(weightKg, effectiveReps(reps + rir, lift));
 }
 
 /* ------------------------------------------------------------------ */
