@@ -1,0 +1,57 @@
+{
+  "name": "AldeaFit — Calculadora de fuerza",
+  "short_name": "AldeaFit",
+  "description": "1RM por consenso, carga de discos, calentamiento y progreso. Funciona sin conexión.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#08090b",
+  "theme_color": "#08090b",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["health", "fitness", "sports", "utilities"],
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Calculadora 1RM",
+      "short_name": "1RM",
+      "url": "./#/calculator"
+    },
+    {
+      "name": "Cargador de barra",
+      "short_name": "Discos",
+      "url": "./#/plates"
+    },
+    {
+      "name": "Calentamiento",
+      "short_name": "Warm-up",
+      "url": "./#/warmup"
+    }
+  ]
+}

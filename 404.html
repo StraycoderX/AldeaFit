@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <!--
+      Content Security Policy.
+
+      The app makes no network requests at runtime — fonts are self-hosted, there
+      are no analytics, no CDN and no backend — so the policy can be maximally
+      restrictive. `default-src 'none'` denies every fetch type by default and
+      each directive below re-opens only what is actually used.
+
+      `style-src` needs 'unsafe-inline' because the design system drives theming
+      through inline `style` attributes bound to CSS custom properties. This is
+      the one relaxation, and it is bounded: no inline *scripts* are permitted,
+      so the usual XSS escalation path stays closed.
+
+      frame-ancestors is deliberately absent: a <meta> CSP cannot express it, and
+      including it only logs a console error on every load. Clickjacking
+      protection comes from the real header in public/_headers. See SECURITY.md
+      for the GitHub Pages caveat.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none';
+               script-src 'self';
+               style-src 'self' 'unsafe-inline';
+               img-src 'self' data:;
+               font-src 'self';
+               connect-src 'self';
+               manifest-src 'self';
+               worker-src 'self';
+               base-uri 'none';
+               form-action 'none';
+               object-src 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+
+    <title>AldeaFit — Calculadora 1RM, discos y progreso</title>
+    <meta
+      name="description"
+      content="Calculadora de fuerza offline: 1RM por consenso de 7 fórmulas, carga de discos en la barra, calentamiento y seguimiento del progreso. Sin cuentas y sin rastreo."
+    />
+
+    <meta name="theme-color" content="#08090b" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f7f8f5" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="dark light" />
+
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AldeaFit" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AldeaFit — Tu fuerza, calculada de verdad" />
+    <meta
+      property="og:description"
+      content="1RM por consenso de 7 fórmulas, carga de discos, calentamiento y progreso. Funciona sin conexión."
+    />
+    <meta property="og:image" content="./og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Preload the two fonts actually used above the fold. -->
+    <link rel="preload" href="./fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <script type="module" crossorigin src="/AldeaFit/assets/index-D_V1ZDSU.js"></script>
+    <link rel="modulepreload" crossorigin href="/AldeaFit/assets/react-BLLi2ap1.js">
+    <link rel="stylesheet" crossorigin href="/AldeaFit/assets/index-CWsIVqVn.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="padding: 2rem; font-family: system-ui; color: #e6e9ed; background: #08090b">
+        <h1>AldeaFit</h1>
+        <p>Esta aplicación necesita JavaScript. / This application requires JavaScript.</p>
+      </div>
+    </noscript>
+  </body>
+</html>
