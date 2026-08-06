@@ -18,7 +18,7 @@
  * development default.
  */
 
-const CACHE_VERSION = 'aldeafit-227da448';
+const CACHE_VERSION = 'aldeafit-280900ed';
 const PRECACHE_URLS = [
   './',
   './index.html',
