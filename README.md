@@ -84,10 +84,11 @@ como lo que son.
   aproximadas, zona de entrenamiento y la carga de discos correspondiente.
 - **Calentamiento** — series de aproximación adaptadas a lo pesada que sea la
   sesión, con descansos y discos por serie.
-- **Técnica** — figura 3D articulada que demuestra cada levantamiento, girable
-  con el ratón o el dedo, más las claves de ejecución. Renderizador propio sobre
-  canvas: sin librería 3D, sin modelo binario y sin CDN, para no romper la CSP
-  ni el presupuesto de tamaño.
+- **Técnica** — figura 3D articulada con volumen anatómico (extremidades
+  torneadas con vientre muscular, torso con hombros, cintura y pelvis reales)
+  que demuestra cada levantamiento, girable con el ratón o el dedo, más las
+  claves de ejecución. Renderizador propio sobre canvas: sin librería 3D, sin
+  modelo binario y sin CDN, para no romper la CSP ni el presupuesto de tamaño.
 - **Nivel de fuerza** — escalera principiante → élite según tu ratio
   fuerza/peso, más puntuación DOTS normalizada por peso corporal.
 - **Progreso** — historial con gráfica de evolución y detección de récord
@@ -135,7 +136,8 @@ src/
 ├── lib/          Lógica de dominio pura, sin React (y donde viven los tests)
 │   ├── onerm.ts       Modelo de datos de gimnasio + 7 clásicas + porcentajes
 │   ├── exercises.ts   Capacidad de repeticiones por ejercicio
-│   ├── technique.ts   Esqueleto 3D, poses y claves por levantamiento
+│   ├── technique.ts   Esqueleto 3D, poses, cámara y claves por levantamiento
+│   ├── anatomy.ts     Volumen corporal: extremidades torneadas y torso
 │   ├── plates.ts      Resolución de discos con inventario finito
 │   ├── standards.ts   DOTS y escalera de niveles
 │   ├── warmup.ts      Generación de series de aproximación
@@ -150,8 +152,8 @@ src/
 ```
 
 La lógica de dominio es **TypeScript puro sin dependencias de React**, lo que
-permite testearla directamente. 105 tests cubren el modelo, la resolución de
-discos, la validación y el almacenamiento.
+permite testearla directamente. 119 tests cubren el modelo, la resolución de
+discos, la validación, el almacenamiento y la geometría del cuerpo 3D.
 
 ### Decisiones de diseño
 

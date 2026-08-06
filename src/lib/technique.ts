@@ -110,6 +110,17 @@ export interface Technique {
    * side-on view to be legible at all.
    */
   defaultRotation: number;
+  /**
+   * Camera elevation in radians: how far above the figure the view sits.
+   *
+   * A standing lift barely needs any, because gravity already separates the
+   * joints vertically on screen. A lying lift needs a lot: flat on a bench,
+   * head, hips and feet are all at the same height, so a level camera stacks
+   * the whole body into one horizontal pile of overlapping limbs. Looking down
+   * on it spreads the body along the screen's vertical axis and the pose
+   * becomes readable.
+   */
+  cameraPitch: number;
   /** How many coaching cues exist for this lift, as `tech.<lift>.cue1..N`. */
   cueCount: number;
   /** Seconds for one full out-and-back cycle. */
@@ -258,12 +269,12 @@ const ROW_TOP: Pose = {
 };
 
 export const TECHNIQUES: Record<LiftId, Technique> = {
-  squat: { lift: 'squat', frames: [SQUAT_TOP, SQUAT_BOTTOM], bar: 'hands', prop: 'none', defaultRotation: 0.55, cueCount: 4, cycleSeconds: 4 },
-  bench: { lift: 'bench', frames: [BENCH_TOP, BENCH_BOTTOM], bar: 'hands', prop: 'bench', defaultRotation: 1.02, cueCount: 4, cycleSeconds: 3.6 },
-  deadlift: { lift: 'deadlift', frames: [DEADLIFT_BOTTOM, DEADLIFT_TOP], bar: 'hands', prop: 'none', defaultRotation: 0.6, cueCount: 4, cycleSeconds: 4 },
-  ohp: { lift: 'ohp', frames: [OHP_BOTTOM, OHP_TOP], bar: 'hands', prop: 'none', defaultRotation: 0.5, cueCount: 4, cycleSeconds: 3.4 },
-  row: { lift: 'row', frames: [ROW_BOTTOM, ROW_TOP], bar: 'hands', prop: 'none', defaultRotation: 0.75, cueCount: 4, cycleSeconds: 3.4 },
-  other: { lift: 'other', frames: [STANDING], bar: 'none', prop: 'none', defaultRotation: 0.5, cueCount: 1, cycleSeconds: 3 },
+  squat: { lift: 'squat', frames: [SQUAT_TOP, SQUAT_BOTTOM], bar: 'hands', prop: 'none', defaultRotation: 0.55, cameraPitch: 0.1, cueCount: 4, cycleSeconds: 4 },
+  bench: { lift: 'bench', frames: [BENCH_TOP, BENCH_BOTTOM], bar: 'hands', prop: 'bench', defaultRotation: 1.02, cameraPitch: 0.5, cueCount: 4, cycleSeconds: 3.6 },
+  deadlift: { lift: 'deadlift', frames: [DEADLIFT_BOTTOM, DEADLIFT_TOP], bar: 'hands', prop: 'none', defaultRotation: 0.6, cameraPitch: 0.1, cueCount: 4, cycleSeconds: 4 },
+  ohp: { lift: 'ohp', frames: [OHP_BOTTOM, OHP_TOP], bar: 'hands', prop: 'none', defaultRotation: 0.5, cameraPitch: 0.08, cueCount: 4, cycleSeconds: 3.4 },
+  row: { lift: 'row', frames: [ROW_BOTTOM, ROW_TOP], bar: 'hands', prop: 'none', defaultRotation: 0.75, cameraPitch: 0.12, cueCount: 4, cycleSeconds: 3.4 },
+  other: { lift: 'other', frames: [STANDING], bar: 'none', prop: 'none', defaultRotation: 0.5, cameraPitch: 0.1, cueCount: 1, cycleSeconds: 3 },
 };
 
 /** Linear blend between two poses. `t` runs 0 → 1. */
