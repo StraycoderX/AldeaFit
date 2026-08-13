@@ -84,11 +84,14 @@ como lo que son.
   aproximadas, zona de entrenamiento y la carga de discos correspondiente.
 - **Calentamiento** — series de aproximación adaptadas a lo pesada que sea la
   sesión, con descansos y discos por serie.
-- **Técnica** — figura 3D articulada con volumen anatómico (extremidades
-  torneadas con vientre muscular, torso con hombros, cintura y pelvis reales)
-  que demuestra cada levantamiento, girable con el ratón o el dedo, más las
-  claves de ejecución. Renderizador propio sobre canvas: sin librería 3D, sin
-  modelo binario y sin CDN, para no romper la CSP ni el presupuesto de tamaño.
+- **Técnica** — figura 3D con superficie real que demuestra cada levantamiento,
+  girable con el ratón o el dedo, más las claves de ejecución. No es un dibujo
+  con degradados: el cuerpo es una malla de polígonos que se proyecta, se
+  ilumina, se ordena por profundidad y se rellena en cada fotograma — un
+  rasterizador propio sobre canvas. Por eso la barra puede pasar *por detrás*
+  del cuello en sentadilla y *por delante* del pecho en press banca, y por eso
+  el volumen se mantiene al girar la figura. Sin librería 3D, sin modelo binario
+  y sin CDN, para no romper la CSP ni el presupuesto de tamaño.
 - **Nivel de fuerza** — escalera principiante → élite según tu ratio
   fuerza/peso, más puntuación DOTS normalizada por peso corporal.
 - **Progreso** — historial con gráfica de evolución y detección de récord
@@ -137,7 +140,7 @@ src/
 │   ├── onerm.ts       Modelo de datos de gimnasio + 7 clásicas + porcentajes
 │   ├── exercises.ts   Capacidad de repeticiones por ejercicio
 │   ├── technique.ts   Esqueleto 3D, poses, cámara y claves por levantamiento
-│   ├── anatomy.ts     Volumen corporal: extremidades torneadas y torso
+│   ├── anatomy.ts     Malla del cuerpo, la barra y el banco
 │   ├── plates.ts      Resolución de discos con inventario finito
 │   ├── standards.ts   DOTS y escalera de niveles
 │   ├── warmup.ts      Generación de series de aproximación
@@ -152,7 +155,7 @@ src/
 ```
 
 La lógica de dominio es **TypeScript puro sin dependencias de React**, lo que
-permite testearla directamente. 119 tests cubren el modelo, la resolución de
+permite testearla directamente. 126 tests cubren el modelo, la resolución de
 discos, la validación, el almacenamiento y la geometría del cuerpo 3D.
 
 ### Decisiones de diseño
@@ -166,6 +169,14 @@ discos, la validación, el almacenamiento y la geometría del cuerpo 3D.
   reescritura, y el service worker sólo tiene un documento que cachear.
 - **Sin librería de gráficas ni de iconos.** Ambas cosas son SVG propio: pesan
   menos que la dependencia y mantienen la CSP cerrada.
+- **La figura 3D se dibuja a 30 fps, no a 60.** Una repetición dura tres segundos
+  y medio: a esa velocidad el ojo no distingue 60 de 30, y renderizar la
+  superficie es lo más caro que hace la app. Dibujar la mitad de fotogramas
+  reduce a la mitad el consumo de batería en el móvil del gimnasio.
+- **La malla se adapta al tamaño del panel.** Un móvil dibuja la figura a un
+  tercio del ancho de un escritorio y no puede resolver los mismos lados, así
+  que se muestrean menos: la densidad escala con el ancho real, no con un
+  breakpoint.
 
 ---
 

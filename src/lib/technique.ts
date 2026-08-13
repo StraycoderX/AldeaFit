@@ -169,6 +169,16 @@ const SQUAT_BOTTOM = pose({
 /* Bench press — lying, so the whole figure is rotated onto its back    */
 /* ------------------------------------------------------------------ */
 
+/*
+ * The bar clears the chest by a few centimetres rather than meeting it at the
+ * joint line. The torso is a solid with about 11 cm of depth in front of the
+ * spine, so a bar placed at the height of the chest *joint* is buried inside
+ * the ribcage and disappears behind it.
+ *
+ * The grip is also a real bench grip — roughly one and a half times shoulder
+ * width. At shoulder width the elbows have nowhere to go at the bottom, and
+ * have to flare out past the hands to keep the arm segments their true length.
+ */
 const BENCH_BOTTOM: Pose = {
   head: [0, 42, -34],
   neck: [0, 42, -18],
@@ -176,10 +186,10 @@ const BENCH_BOTTOM: Pose = {
   hip: [0, 40, 30],
   shoulderL: [-19, 42, -8],
   shoulderR: [19, 42, -8],
-  elbowL: [-34, 30, -4],
-  elbowR: [34, 30, -4],
-  handL: [-24, 52, -4],
-  handR: [24, 52, -4],
+  elbowL: [-45, 33, -6],
+  elbowR: [45, 33, -6],
+  handL: [-38, 60, -4],
+  handR: [38, 60, -4],
   kneeL: [-13, 26, 56],
   kneeR: [13, 26, 56],
   ankleL: [-14, 2, 44],
@@ -190,10 +200,11 @@ const BENCH_BOTTOM: Pose = {
 
 const BENCH_TOP: Pose = {
   ...BENCH_BOTTOM,
-  elbowL: [-24, 62, -6],
-  elbowR: [24, 62, -6],
-  handL: [-22, 88, -4],
-  handR: [22, 88, -4],
+  elbowL: [-30, 67, -6],
+  elbowR: [30, 67, -6],
+  // Same grip width as the bottom — it is the same rigid bar.
+  handL: [-38, 92, -4],
+  handR: [38, 92, -4],
 };
 
 /* ------------------------------------------------------------------ */
@@ -270,7 +281,7 @@ const ROW_TOP: Pose = {
 
 export const TECHNIQUES: Record<LiftId, Technique> = {
   squat: { lift: 'squat', frames: [SQUAT_TOP, SQUAT_BOTTOM], bar: 'hands', prop: 'none', defaultRotation: 0.55, cameraPitch: 0.1, cueCount: 4, cycleSeconds: 4 },
-  bench: { lift: 'bench', frames: [BENCH_TOP, BENCH_BOTTOM], bar: 'hands', prop: 'bench', defaultRotation: 1.02, cameraPitch: 0.5, cueCount: 4, cycleSeconds: 3.6 },
+  bench: { lift: 'bench', frames: [BENCH_TOP, BENCH_BOTTOM], bar: 'hands', prop: 'bench', defaultRotation: 0.55, cameraPitch: 0.75, cueCount: 4, cycleSeconds: 3.6 },
   deadlift: { lift: 'deadlift', frames: [DEADLIFT_BOTTOM, DEADLIFT_TOP], bar: 'hands', prop: 'none', defaultRotation: 0.6, cameraPitch: 0.1, cueCount: 4, cycleSeconds: 4 },
   ohp: { lift: 'ohp', frames: [OHP_BOTTOM, OHP_TOP], bar: 'hands', prop: 'none', defaultRotation: 0.5, cameraPitch: 0.08, cueCount: 4, cycleSeconds: 3.4 },
   row: { lift: 'row', frames: [ROW_BOTTOM, ROW_TOP], bar: 'hands', prop: 'none', defaultRotation: 0.75, cameraPitch: 0.12, cueCount: 4, cycleSeconds: 3.4 },
